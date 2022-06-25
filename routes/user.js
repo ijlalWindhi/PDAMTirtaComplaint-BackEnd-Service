@@ -76,7 +76,6 @@ app.post("/register", async (req,res) => {
     })
     .then(result => {
         resultArr = result;
-        // console.log(resultArr)
         if(resultArr.length > 0){
             if(resultArr[0].email == data.email){
                 res.status(400).json({
@@ -164,10 +163,10 @@ app.put("/edit/:id", async (req,res) => {
         name : req.body.name,
         username : req.body.username,
         password : req.body.password,
-        email : req.body.email,
         address : req.body.address,
         role : req.body.role,
         telephone : req.body.telephone,
+        resultArr: {}
     }
 
     // check if password is empty
@@ -176,20 +175,34 @@ app.put("/edit/:id", async (req,res) => {
         data.password = await bcrypt.hash(data.password, salt);
     }
 
-
-    user.update(data, {where: param})
-        .then(result => {
-            res.json({
-                status: "success",
-                message: "User has been updated"
-            })
-        })
-        .catch(error => {
-            res.json({
+    user.findAll({
+        where: {
+            username: data.username
+        }
+    })
+    .then(result => {
+        resultArr = result;
+        if(resultArr.length > 0){
+            res.status(400).json({
                 status: "error",
-                message: error.message
+                message: "Username already exist"
             })
-        })
+        }else{
+            user.update(data, {where : param})
+            .then(result => {
+                res.status(200).json({
+                    status: "success",
+                    message: "User has been updated"
+                })
+            })
+            .catch(error => {
+                res.status(400).json({
+                    status: "error",
+                    message: error.message
+                })
+            })
+        }
+    })
 })
 
 module.exports = app
