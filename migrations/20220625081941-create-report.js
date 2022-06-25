@@ -10,7 +10,11 @@ module.exports = {
       },
       id_user: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'user',
+          key: 'id'
+        }
       },
       name: {
         type: Sequelize.STRING(255),
@@ -25,7 +29,7 @@ module.exports = {
         allowNull: false
       },
       description: {
-        type: Sequelize.TEXT(255),
+        type: Sequelize.TEXT,
         allowNull: false
       },
       image: {
