@@ -27,6 +27,24 @@ const storage = multer.diskStorage({
 })
 let upload = multer({ storage: storage })
 
+// get all report
+app.get("/", async (req,res) => {
+    report.findAll()
+        .then(result => {
+            res.status(200).json({
+                status: "success",
+                report : result
+            })
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: "error",
+                message: error.message
+            })
+        })
+})
+
+// add report
 app.post("/add",upload.single("image"), async (req,res) => {
     const data = {
         id_user: req.body.id_user,
