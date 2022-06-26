@@ -112,7 +112,7 @@ app.put("/edit/:id",upload.single("image"), async (req,res) => {
             fs.unlink(dir, err => console.log(err))
         })
         .catch(error => {
-            res.json({
+            res.status(400).json({
                 status: "error",
                 message: error.message
             })
@@ -123,13 +123,44 @@ app.put("/edit/:id",upload.single("image"), async (req,res) => {
 
     report.update(data, {where: param})
         .then(result => {
-            res.json({
+            res.status(200).json({
                 status: "success",
                 message: "report has been updated"
             })
         })
         .catch(error => {
-            res.json({
+            res.status(400).json({
+                status: "error",
+                message: error.message
+            })
+        })
+})
+
+// delete report
+app.delete("/delete/:id", async (req,res) => {
+    let param = {id : req.params.id}
+    report.findOne({where: param})
+        .then(result => {
+            let oldFileName = result.image
+            // delete old file
+            let dir = path.join(__dirname,"../public/image/report",oldFileName)
+            fs.unlink(dir, err => console.log(err))
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: "error",
+                message: error.message
+            })
+        })
+    report.destroy({where: param})
+        .then(result => {
+            res.status(200).json({
+                status: "success",
+                message: "report has been deleted"
+            })
+        })
+        .catch(error => {
+            res.status(400).json({
                 status: "error",
                 message: error.message
             })
