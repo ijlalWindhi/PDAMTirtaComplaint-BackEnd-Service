@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "dhisa",
-    "password": "22082004",
-    "database": "pdamTirtaSidoarjo",
-    "host": "127.0.0.1",
+    "username": "uyagrscyvdqzysku",
+    "password": "An1WBKIdwdQcg3g7S6LE",
+    "database": "bjmxa16nyrdsidwksvvy",
+    "host": "bjmxa16nyrdsidwksvvy-mysql.services.clever-cloud.com",
     "dialect": "mysql"
   },
   "test": {
