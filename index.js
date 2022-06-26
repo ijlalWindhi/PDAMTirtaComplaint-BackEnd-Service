@@ -10,8 +10,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //endpoint
 const user = require('./routes/user')
+const report = require('./routes/report')
 
 app.use('/user', user);
+app.use('/report', report);
 
 //run server
 const port = 2004;
