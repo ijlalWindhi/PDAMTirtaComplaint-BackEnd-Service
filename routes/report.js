@@ -91,4 +91,49 @@ app.post("/add",upload.single("image"), async (req,res) => {
         })
 })
 
+// update report
+app.put("/edit/:id",upload.single("image"), async (req,res) => {
+    let param = {id : req.params.id}
+    const data = {
+        id_user: req.body.id_user,
+        name : req.body.name,
+        date : req.body.date,
+        address : req.body.address,
+        description : req.body.description,
+    }
+    // check if image is empty
+    if (req.file) {
+        // get data by id
+        report.findOne({where: param})
+        .then(result => {
+            let oldFileName = result.image
+            // delete old file
+            let dir = path.join(__dirname,"../public/image/report",oldFileName)
+            fs.unlink(dir, err => console.log(err))
+        })
+        .catch(error => {
+            res.json({
+                status: "error",
+                message: error.message
+            })
+        })
+        // set new filename
+        data.image = req.file.filename
+    }
+
+    report.update(data, {where: param})
+        .then(result => {
+            res.json({
+                status: "success",
+                message: "report has been updated"
+            })
+        })
+        .catch(error => {
+            res.json({
+                status: "error",
+                message: error.message
+            })
+        })
+})
+
 module.exports = app
