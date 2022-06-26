@@ -16,7 +16,7 @@ app.use('/user', user);
 app.use('/report', report);
 
 //run server
-const port = 2004;
+const port = process.env.PORT || 2004;
 app.listen(port, () => {
     console.log('server run on port ' + port);
 })
