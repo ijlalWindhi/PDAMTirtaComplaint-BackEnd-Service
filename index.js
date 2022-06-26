@@ -20,5 +20,5 @@ app.use('/report', report);
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-    console.log('server run on port ' + port);
+    console.log('server run on port ' + PORT);
 })
