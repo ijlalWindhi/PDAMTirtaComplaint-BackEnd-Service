@@ -19,7 +19,7 @@ const report = model.report
 //config storage image
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./public/image/userProfile")
+        cb(null, "./public/image/report")
     },
     filename: (req, file, cb) => {
         cb(null, "img-" + Date.now() + path.extname(file.originalname))
