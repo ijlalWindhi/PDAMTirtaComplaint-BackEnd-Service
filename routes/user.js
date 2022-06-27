@@ -23,7 +23,7 @@ app.get("/", async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -45,7 +45,7 @@ app.get("/:id", async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -78,12 +78,12 @@ app.post("/register", async (req,res) => {
         resultArr = result;
         if(resultArr.length > 0){
             if(resultArr[0].email == data.email){
-                res.status(400).json({
+                res.json({
                     status: "error",
                     message: "Email already exist"
                 })
             }else{
-                res.status(400).json({
+                res.json({
                     status: "error",
                     message: "Username already exist"                
                 })
@@ -97,7 +97,7 @@ app.post("/register", async (req,res) => {
                 })
             })
             .catch(error => { 
-                res.status(400).json({
+                res.json({
                     status: "error",
                     message: error.message
                 })
@@ -121,13 +121,13 @@ app.post("/login", async (req, res) => {
                         data: data
                     });
         } else {
-            res.status(400).json({  status: "error",
+            res.json({  status: "error",
                         logged: false,
                         message: "Invalid Password"
                     });
         }
     } else {
-        res.status(400).json({
+        res.json({
             status: "error",
             message: "User does not exist"
         });
@@ -149,7 +149,7 @@ app.delete("/delete/:id", async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -183,7 +183,7 @@ app.put("/edit/:id", async (req,res) => {
     .then(result => {
         resultArr = result;
         if(resultArr.length > 0){
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: "Username already exist"
             })
@@ -196,7 +196,7 @@ app.put("/edit/:id", async (req,res) => {
                 })
             })
             .catch(error => {
-                res.status(400).json({
+                res.json({
                     status: "error",
                     message: error.message
                 })

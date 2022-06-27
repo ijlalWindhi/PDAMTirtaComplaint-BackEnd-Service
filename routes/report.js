@@ -37,7 +37,7 @@ app.get("/", async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -58,7 +58,7 @@ app.get("/:id_user", async (req,res) => {
         })
     })
     .catch(error => {
-        res.status(400).json({
+        res.json({
             status: "error",
             message: error.message
         })
@@ -84,7 +84,7 @@ app.post("/add",upload.single("image"), async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -112,7 +112,7 @@ app.put("/edit/:id",upload.single("image"), async (req,res) => {
             fs.unlink(dir, err => console.log(err))
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -129,7 +129,7 @@ app.put("/edit/:id",upload.single("image"), async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -147,7 +147,7 @@ app.delete("/delete/:id", async (req,res) => {
             fs.unlink(dir, err => console.log(err))
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
@@ -160,7 +160,7 @@ app.delete("/delete/:id", async (req,res) => {
             })
         })
         .catch(error => {
-            res.status(400).json({
+            res.json({
                 status: "error",
                 message: error.message
             })
