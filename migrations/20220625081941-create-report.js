@@ -17,7 +17,7 @@ module.exports = {
         }
       },
       name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(100),
         allowNull: false
       },
       date: {
