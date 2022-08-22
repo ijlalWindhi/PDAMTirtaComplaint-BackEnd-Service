@@ -1,6 +1,7 @@
 //import library
 const express = require("express");
 const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 
 //implementasi library
 const app = express();
@@ -15,6 +16,7 @@ const fs = require("fs");
 //import model
 const model = require("../models/index");
 const report = model.report;
+const user = model.user;
 
 //config storage image
 const storage = multer.diskStorage({
@@ -56,8 +58,7 @@ app.get("/:id_user", async (req, res) => {
         })
         .then((result) => {
             res.status(200).json({
-                status: "success",
-                report: result,
+                data: result,
             });
         })
         .catch((error) => {
@@ -85,6 +86,46 @@ app.post("/add", upload.single("image"), async (req, res) => {
             res.status(200).json({
                 status: "success",
                 message: "report has been add",
+            });
+
+            user.findOne({
+                where: {
+                    id: req.body.id_user,
+                },
+            }).then((respons) => {
+                // setup for sender mail
+                const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: "YourMail@domain.com", //suggestion use gmail
+                        pass: "YourPassword", //password your mail account
+                    },
+                });
+
+                const mailOptions = {
+                    from: '"PDAM Tirta Sidoarjo" <YourMail@domain.com>', //mail like in above
+                    to: respons.email,
+                    subject: "Review Feedback PDAM Tirta Sidoarjo",
+                    html:
+                        "<h3><b>Judul Pengaduan :</b></h3>" +
+                        `<h3>${result.name}</h3>` +
+                        "<br>" +
+                        "<h3><b>Tanggal Pengaduan :</b></h3>" +
+                        `<h3>${result.date}</h3>` +
+                        "<br>" +
+                        "<h3><b>Deskripsi Pengaduan :</b></h3>" +
+                        `<h3>${result.description}</h3>` +
+                        "<br>" +
+                        "<h3><b>Alamat Pengaduan :</b></h3>" +
+                        `<h3>${result.address}</h3>` +
+                        "<br>",
+                };
+
+                transporter.sendMail(mailOptions, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
             });
         })
         .catch((error) => {
