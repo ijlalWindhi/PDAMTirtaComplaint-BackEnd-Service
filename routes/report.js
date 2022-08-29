@@ -119,13 +119,13 @@ app.post("/add", upload.single("image"), async (req, res) => {
                 const transporter = nodemailer.createTransport({
                     service: "gmail",
                     auth: {
-                        user: "ijlalwindhi15@gmail.com", //suggestion use gmail
-                        pass: "YourPassword", //password your mail account
+                        user: "yourmain@domain", //suggestion use gmail
+                        pass: "yourpassword", //password your mail account
                     },
                 });
 
                 const mailOptions = {
-                    from: '"PDAM Tirta Sidoarjo" <ijlalwindhi15@gmail.com>', //mail like in above
+                    from: '"PDAM Tirta Sidoarjo" <yourmain@domain>', //mail like in above
                     to: respons.email,
                     subject: "Review Feedback PDAM Tirta Sidoarjo",
                     html:
