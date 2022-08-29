@@ -47,7 +47,29 @@ app.get("/", async (req, res) => {
         });
 });
 
-// get report by user
+// get report by id
+app.get("/history/:id_user", async (req, res) => {
+    report
+        .findAll({
+            where: {
+                id_user: req.params.id_user,
+            },
+            order: [["id", "DESC"]],
+        })
+        .then((result) => {
+            res.status(200).json({
+                data: result,
+            });
+        })
+        .catch((error) => {
+            res.json({
+                status: "error",
+                message: error.message,
+            });
+        });
+});
+
+// get last report by user
 app.get("/:id_user", async (req, res) => {
     report
         .findOne({
@@ -97,13 +119,13 @@ app.post("/add", upload.single("image"), async (req, res) => {
                 const transporter = nodemailer.createTransport({
                     service: "gmail",
                     auth: {
-                        user: "YourMail@domain.com", //suggestion use gmail
+                        user: "ijlalwindhi15@gmail.com", //suggestion use gmail
                         pass: "YourPassword", //password your mail account
                     },
                 });
 
                 const mailOptions = {
-                    from: '"PDAM Tirta Sidoarjo" <YourMail@domain.com>', //mail like in above
+                    from: '"PDAM Tirta Sidoarjo" <ijlalwindhi15@gmail.com>', //mail like in above
                     to: respons.email,
                     subject: "Review Feedback PDAM Tirta Sidoarjo",
                     html:
